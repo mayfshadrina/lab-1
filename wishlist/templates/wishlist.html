@@ -1,28 +1,70 @@
 {% extends 'base.html' %}
-
 {% block content %}
-<h5>Nama: </h5>
-<p>{{nama}}</p>
+<style>
+    table {
+        text-align: center;
+        margin-left: auto;  
+        margin-right: auto; 
+    }
+</style>
 
-<table>
-    <table border="1">
-    <tr>
-    <th>Nama Barang</th>
-    <th>Harga Barang</th>
-    <th>Deskripsi</th>
-    </tr>
-    {% comment %} Tambahkan data di bawah baris ini {% endcomment %}
-    {% for barang in list_barang %}
-    <tr>
-        <th>{{barang.nama_barang}}</th>
-        <th>{{barang.harga_barang}}</th>
-        <th>{{barang.deskripsi}}</th>
-    </tr>
-    {% endfor %}
-</table>
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  </head>
+  <body>
+    <div class="d-grid gap-3">
+        <nav class="navbar bg-success">
+            <div class="container-fluid">
+            <span class="navbar-brand text-light h1">Tokopetantang</span>
+            <li class="nav-item dropdown no-bullets">
+                <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                {{nama}}
+                </a>
+                <ul class="dropdown-menu">
+                    <a class="dropdown-item" href="#">Profile</a>
+                    <a class="dropdown-item" href="#">Pendapatan</a>
+                    <a class="dropdown-item" href="#">Pengeluaran</a>
+                    <hr class="dropdown-divider">
+                    <a class="dropdown-item text-success" href="{% url 'wishlist:logout' %}">Log Out</a>
+                </ul>
+            </li>
+            </div>
+        </nav>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+        <div class="d-flex justify-content-center">
+            <h4>Daftar Barang Toko Mae</h4>
+        </div>
 
-<h5>Sesi terakhir login: {{ last_login }}</h5>
+        <table>
+            <table class="table table-striped", style="width: 50%", .padding:"center">
+            <tr>
+            <th class="text-success">Nama Barang</th>
+            <th class="text-success">Harga Barang</th>
+            <th class="text-success">Deskripsi</th>
+            </tr>
+            <tbody class="table-group-divider">
 
-<button><a href="{% url 'wishlist:logout' %}">Logout</a></button>
+            {% comment %} Tambahkan data di bawah baris ini {% endcomment %}
+            {% for barang in list_barang %}
+            <tr>
+                <th class=" fw-normal">{{barang.nama_barang}}</th>
+                <th class=" fw-normal">{{barang.harga_barang}}</th>
+                <th class=" fw-normal">{{barang.deskripsi}}</th>
+            </tr>
+            {% endfor %}
+        </table>
+        <div class="d-flex justify-content-center">
+            <th class=" fw-normal">Sesi terakhir login: {{ last_login }}</th>
+        </div>
 
-{% endblock content %}
+    </div>
+  </body>
+</html>
+{% endblock content%}
