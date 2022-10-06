@@ -14,7 +14,6 @@ from django.urls import reverse
 
 # Create your views here.
 @login_required(login_url='/wishlist/login/')
-
 def show_wishlist(request):
     data_barang_wishlist = BarangWishlist.objects.all()
     context = {
@@ -73,3 +72,23 @@ def logout_user(request):
     response = HttpResponseRedirect(reverse('wishlist:login'))
     response.delete_cookie('last_login')
     return response
+
+@login_required(login_url='/wishlist/login/')
+def show_wishlist_ajax(request):
+    data_barang_wishlist = BarangWishlist.objects.all()
+    context = {
+        'list_barang': data_barang_wishlist,
+        'nama': 'Mayfa Shadrina Siddi',
+        'last_login' : request.COOKIES['last_login'],
+    }
+    return render(request, "wishlist_ajax.html", context)
+
+@login_required(login_url='/wishlist/login/')
+def add_wishlist(request):
+    if request.method == 'POST':
+        nama_barang = request.POST.get('username')
+        harga_barang = request.POST.get('password')
+        deskripsi = request.POST.get('password')
+        item = BarangWishlist(nama_barang=nama_barang, harga_barang=harga_barang, deskripsi=deskripsi)
+        item.save()
+        return JsonResponse({"instance": "Proyek Dibuat"}, status=200)
